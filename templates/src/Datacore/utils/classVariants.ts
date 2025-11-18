@@ -8,9 +8,9 @@ type BaseSize = {
 }
 
 /**
- * Class Variance Authority
+ * Class Variants - utility for creating component variants
  */
-export const cva =
+export const classVariants =
   <V extends BaseVariant, S extends BaseSize>(config: {
     base: string
     variants: V

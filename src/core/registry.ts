@@ -28,13 +28,13 @@ export const REGISTRY: Record<string, InstallableItem> = {
     targetPath: 'utils/classMerge.ts',
     dependencies: [],
   },
-  cva: {
-    name: 'class-variance-authority',
-    description: 'CVA-like utility for creating component variants',
+  classvariants: {
+    name: 'classVariants',
+    description: 'Utility for creating component variants with type safety',
     category: 'util',
-    sourcePath: 'components/shared/class-variance-authority.ts',
-    targetPath: 'components/shared/class-variance-authority.ts',
-    dependencies: [],
+    sourcePath: 'utils/classVariants.ts',
+    targetPath: 'utils/classVariants.ts',
+    dependencies: ['classmerge'],
   },
   markdown: {
     name: 'markdown',
@@ -62,29 +62,13 @@ export const REGISTRY: Record<string, InstallableItem> = {
   },
 
   // Components
-  card: {
-    name: 'card',
-    description: 'Simple card container component',
-    category: 'component',
-    sourcePath: 'components/shared/card.tsx',
-    targetPath: 'components/shared/card.tsx',
-    dependencies: [],
-  },
   button: {
     name: 'button',
     description: 'Button component with variants and loading states',
     category: 'component',
     sourcePath: 'components/shared/button.tsx',
     targetPath: 'components/shared/button.tsx',
-    dependencies: ['classmerge', 'cva'],
-  },
-  widget: {
-    name: 'widget',
-    description: 'Widget item component for displaying pages',
-    category: 'component',
-    sourcePath: 'components/shared/widget.tsx',
-    targetPath: 'components/shared/widget.tsx',
-    dependencies: ['classmerge', 'files', 'markdown'],
+    dependencies: ['classmerge', 'classvariants'],
   },
 
   // Views

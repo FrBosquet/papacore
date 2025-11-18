@@ -46,13 +46,6 @@ export async function initCommand(projectName?: string): Promise<void> {
       }
     }
 
-    // Copy one basic component (card - no dependencies)
-    const cardSrc = path.join(srcTemplateDir, 'Datacore/components/shared/card.tsx');
-    const cardDest = path.join(targetSrcDir, 'Datacore/components/shared/card.tsx');
-    if (fs.existsSync(cardSrc)) {
-      fs.copyFileSync(cardSrc, cardDest);
-    }
-
     // Copy one basic view (Today)
     const todaySrc = path.join(srcTemplateDir, 'Datacore/views/Today.tsx');
     const todayDest = path.join(targetSrcDir, 'Datacore/views/Today.tsx');

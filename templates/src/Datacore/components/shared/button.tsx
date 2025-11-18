@@ -1,9 +1,9 @@
 import type { ComponentChildren } from 'preact'
 import type { IconName } from '../../../icons'
 import { classMerge } from '../../utils/classMerge'
-import { cva } from './class-variance-authority'
+import { classVariants } from '../../utils/classVariants'
 
-const getVariant = cva({
+const getVariant = classVariants({
   base: 'relative rounded-none cursor-pointer h-auto uppercase font-semibold transition-colors py-1 flex gap-1 items-center',
   variants: {
     default:
