@@ -11,6 +11,7 @@ import { devCommand } from './commands/dev.js';
 import { initCommand } from './commands/init.js';
 import { installCommand } from './commands/install.js';
 import { scanCommand } from './commands/scan.js';
+import { setColorCommand } from './commands/theme.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -85,5 +86,15 @@ program
   .command('build-css')
   .description('Build CSS only')
   .action(buildCssCommand);
+
+// Theme command with subcommands
+const theme = program
+  .command('theme')
+  .description('Manage theme colors and styles');
+
+theme
+  .command('set-color <color-name> <color-value>')
+  .description('Set a theme color with auto-generated shades (50-950)')
+  .action(setColorCommand);
 
 program.parse(process.argv);
