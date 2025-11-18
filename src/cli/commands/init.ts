@@ -35,9 +35,9 @@ export async function initCommand(projectName?: string): Promise<void> {
     ensureDir(path.join(targetSrcDir, 'Datacore/utils'));
     ensureDir(path.join(targetSrcDir, 'Datacore/views'));
 
-    // Copy basic files: dc.d.ts and styles.css
+    // Copy basic files: styles.css
     const srcTemplateDir = path.join(templatesDir, 'src');
-    const basicFiles = ['dc.d.ts', 'styles.css'];
+    const basicFiles = ['styles.css'];
     for (const file of basicFiles) {
       const src = path.join(srcTemplateDir, file);
       const dest = path.join(targetSrcDir, file);

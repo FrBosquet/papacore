@@ -5,6 +5,7 @@ import type { JSX as PreactJSX } from 'preact'
 
 // Re-export commonly used types for convenience
 export type { Indexable }
+export type { IconName } from './icons'
 
 // Declare the jsx-runtime module to silence TypeScript errors
 declare module 'preact/jsx-runtime' {
