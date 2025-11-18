@@ -26,11 +26,38 @@ export async function initCommand(projectName?: string): Promise<void> {
     // Get templates directory (go up from dist/cli/commands/ to templates/)
     const templatesDir = path.join(__dirname, '../../../templates');
 
-    // Copy source files
-    const srcTemplateDir = path.join(templatesDir, 'src');
+    // Create minimal source structure
     const targetSrcDir = path.join(targetDir, 'src');
-    if (fs.existsSync(srcTemplateDir)) {
-      copyRecursive(srcTemplateDir, targetSrcDir);
+    ensureDir(targetSrcDir);
+    ensureDir(path.join(targetSrcDir, 'Datacore'));
+    ensureDir(path.join(targetSrcDir, 'Datacore/components'));
+    ensureDir(path.join(targetSrcDir, 'Datacore/components/shared'));
+    ensureDir(path.join(targetSrcDir, 'Datacore/utils'));
+    ensureDir(path.join(targetSrcDir, 'Datacore/views'));
+
+    // Copy basic files: dc.d.ts and styles.css
+    const srcTemplateDir = path.join(templatesDir, 'src');
+    const basicFiles = ['dc.d.ts', 'styles.css'];
+    for (const file of basicFiles) {
+      const src = path.join(srcTemplateDir, file);
+      const dest = path.join(targetSrcDir, file);
+      if (fs.existsSync(src)) {
+        fs.copyFileSync(src, dest);
+      }
+    }
+
+    // Copy one basic component (card - no dependencies)
+    const cardSrc = path.join(srcTemplateDir, 'Datacore/components/shared/card.tsx');
+    const cardDest = path.join(targetSrcDir, 'Datacore/components/shared/card.tsx');
+    if (fs.existsSync(cardSrc)) {
+      fs.copyFileSync(cardSrc, cardDest);
+    }
+
+    // Copy one basic view (Today)
+    const todaySrc = path.join(srcTemplateDir, 'Datacore/views/Today.tsx');
+    const todayDest = path.join(targetSrcDir, 'Datacore/views/Today.tsx');
+    if (fs.existsSync(todaySrc)) {
+      fs.copyFileSync(todaySrc, todayDest);
     }
 
     // Copy config files
@@ -99,13 +126,22 @@ A Datacore component library built with Papacore.
    pnpm run config
    \`\`\`
 
-3. Start development mode:
+3. Install components as needed:
+   \`\`\`bash
+   papacore install button
+   papacore install classMerge
+   \`\`\`
+
+   Run \`papacore install\` to see all available components and utilities.
+
+4. Start development mode:
    \`\`\`bash
    pnpm run dev
    \`\`\`
 
 ## Available Commands
 
+- \`papacore install [item]\` - Install components, utilities, or views
 - \`pnpm run dev\` - Build, watch, and auto-install to vault
 - \`pnpm run build\` - Build once
 - \`pnpm run config\` - Configure vault path
@@ -136,7 +172,10 @@ A Datacore component library built with Papacore.
     console.log(`  1. cd ${name}`);
     console.log('  2. pnpm install');
     console.log('  3. pnpm run config');
-    console.log('  4. pnpm run dev');
+    console.log('  4. papacore install <component>  (optional - see available items)');
+    console.log('  5. pnpm run dev');
+    console.log('');
+    logger.info('Tip: Run "papacore install" to see all available components and utilities');
     console.log('');
   } catch (error) {
     logger.failSpinner('Project creation failed');

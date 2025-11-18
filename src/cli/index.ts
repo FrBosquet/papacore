@@ -8,6 +8,8 @@ import { buildCssCommand } from './commands/build-css.js';
 import { configCommand } from './commands/config.js';
 import { copyCommand } from './commands/copy.js';
 import { devCommand } from './commands/dev.js';
+import { initCommand } from './commands/init.js';
+import { installCommand } from './commands/install.js';
 import { scanCommand } from './commands/scan.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -24,6 +26,18 @@ program
   .name('papacore')
   .description('A framework for developing Datacore components with modern tooling')
   .version(packageJson.version);
+
+// Init command
+program
+  .command('init [project-name]')
+  .description('Create a new Papacore project')
+  .action(initCommand);
+
+// Install command
+program
+  .command('install [item]')
+  .description('Install a component, utility, or view')
+  .action(installCommand);
 
 // Dev command
 program
