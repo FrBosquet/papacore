@@ -80,12 +80,12 @@ export const REGISTRY: Record<string, InstallableItem> = {
   },
 
   // Views
-  today: {
-    name: 'today',
-    description: 'Example "Today" view component',
+  sample: {
+    name: 'sample',
+    description: 'Sample view component with usage examples',
     category: 'view',
-    sourcePath: 'views/Today.tsx',
-    targetPath: 'views/Today.tsx',
+    sourcePath: 'views/Sample.tsx',
+    targetPath: 'views/Sample.tsx',
     dependencies: [],
   },
 };

@@ -46,11 +46,11 @@ export async function initCommand(projectName?: string): Promise<void> {
       }
     }
 
-    // Copy one basic view (Today)
-    const todaySrc = path.join(srcTemplateDir, 'Datacore/views/Today.tsx');
-    const todayDest = path.join(targetSrcDir, 'Datacore/views/Today.tsx');
-    if (fs.existsSync(todaySrc)) {
-      fs.copyFileSync(todaySrc, todayDest);
+    // Copy one basic view (Sample)
+    const sampleSrc = path.join(srcTemplateDir, 'Datacore/views/Sample.tsx');
+    const sampleDest = path.join(targetSrcDir, 'Datacore/views/Sample.tsx');
+    if (fs.existsSync(sampleSrc)) {
+      fs.copyFileSync(sampleSrc, sampleDest);
     }
 
     // Copy config files
