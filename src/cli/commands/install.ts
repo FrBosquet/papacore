@@ -106,6 +106,29 @@ async function installItem(
   }
 
   fs.copyFileSync(sourcePath, targetPath);
+
+  // Check for and copy story file if it exists
+  const sourceExt = path.extname(item.sourcePath);
+  const sourceBase = item.sourcePath.slice(0, -sourceExt.length);
+  const storySourcePath = path.join(
+    templateSrcDir,
+    `${sourceBase}.stories${sourceExt}`
+  );
+
+  if (fs.existsSync(storySourcePath)) {
+    const targetBase = item.targetPath.slice(0, -sourceExt.length);
+    const storyTargetPath = path.join(
+      projectRoot,
+      'src/Datacore',
+      `${targetBase}.stories${sourceExt}`
+    );
+
+    // Only copy if story doesn't already exist
+    if (!fs.existsSync(storyTargetPath)) {
+      fs.copyFileSync(storySourcePath, storyTargetPath);
+      logger.info(`  → Also installed ${item.name} stories`);
+    }
+  }
 }
 
 /**

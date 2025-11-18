@@ -1,4 +1,4 @@
-import { classMerge } from "../../utils/classMerge"
+import { classMerge } from "./classMerge"
 
 type BaseVariant = Record<string, string> & { default: string }
 type BaseSize = {

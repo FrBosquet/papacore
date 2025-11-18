@@ -17,11 +17,12 @@ const getVariant = classVariants({
     default: 'px-2 text-sm',
     sm: 'px-1 text-xs',
     lg: 'px-3 text-base',
-    icon: 'px-1 py-1 rounded-full text-xs',
+    icon: 'px-1 py-1 size-8 rounded-full text-xs aspect-square',
+    ['icon-xs']: 'px-[0.25rem] py-[0.25rem] [&_.dc-icon]:size-3 rounded-full text-xs aspect-square'
   },
 })
 
-type Props = {
+export type Props = {
   children?: ComponentChildren
   icon?: IconName
   iconRight?: IconName
@@ -32,6 +33,8 @@ type Props = {
   disabled?: boolean
   tooltip?: string
   isLoading?: boolean
+  type?: 'button' | 'submit' | 'reset'
+  label?: string | null
 }
 
 export const Button = ({
@@ -45,6 +48,8 @@ export const Button = ({
   disabled,
   tooltip,
   isLoading,
+  type = 'button',
+  label,
 }: Props) => {
   const variantValue = getVariant(variant, size)
   const calculatedClassName = classMerge(variantValue, className)
@@ -58,13 +63,13 @@ export const Button = ({
   return (
     <button
       aria-label={tooltip}
-      type="button"
+      type={type}
       className={calculatedClassName}
       disabled={disabled || isLoading}
       onClick={onClick}
     >
       {icon && <dc.Icon icon={icon} />}
-      {children}
+      {label === undefined ? children : label}
       {iconRight && <dc.Icon icon={iconRight} />}
       <div className={loaderClassname}>
         <dc.Icon icon="loader" className="animate-spin" />
