@@ -1,6 +1,6 @@
+import type { IconName } from 'papacore'
 import type { ComponentChildren } from 'preact'
 import { useEffect, useRef } from 'preact/hooks'
-import type { IconName } from '../../../icons'
 import { classMerge } from '../../utils/classMerge'
 import { cleanPath } from '../../utils/files'
 
@@ -38,7 +38,7 @@ export const Link = ({ path, children, icon, className, iconClassName, tooltip, 
   return (
     <span
       ref={pRef}
-      className={classMerge("uppercase p-0 m-0 no-underline text-sm pc-link tracking-wide font-semibold text-theme-accent hover:text-theme-contrast transition-all overflow-hidden w-full", wrapperClassName)}
+      className={classMerge("uppercase p-0 m-0 no-underline text-sm tracking-wide font-semibold text-theme-accent hover:text-theme-contrast transition-all overflow-hidden w-full", wrapperClassName)}
     >
       <dc.Link
         link={link}

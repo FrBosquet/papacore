@@ -1,5 +1,5 @@
+import type { IconName } from 'papacore'
 import type { ComponentChildren } from 'preact'
-import type { IconName } from '../../../icons'
 import { classMerge } from '../../utils/classMerge'
 import { classVariants } from '../../utils/classVariants'
 
