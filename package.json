@@ -17,7 +17,8 @@
   "homepage": "https://github.com/FrBosquet/papacore#readme",
   "scripts": {
     "generate:icons": "node scripts/generate-icons.cjs",
-    "build": "pnpm run generate:icons && tsc && node -e \"const fs=require('fs'),p=require('path');fs.mkdirSync('dist/core/babel',{recursive:true});fs.copyFileSync('src/core/babel/transform-imports-exports.cjs','dist/core/babel/transform-imports-exports.cjs');fs.copyFileSync('src/core/babel/transform-react-hooks.cjs','dist/core/babel/transform-react-hooks.cjs')\"",
+    "copy:babel": "node scripts/copy-babel-plugins.cjs",
+    "build": "pnpm run generate:icons && tsc && pnpm run copy:babel",
     "dev": "tsc --watch",
     "prepublishOnly": "pnpm run build"
   },
