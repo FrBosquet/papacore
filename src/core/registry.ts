@@ -70,6 +70,14 @@ export const REGISTRY: Record<string, InstallableItem> = {
     targetPath: 'components/shared/button.tsx',
     dependencies: ['classmerge', 'classvariants'],
   },
+  dialog: {
+    name: 'dialog',
+    description: 'Dialog/modal component with useDialog hook',
+    category: 'component',
+    sourcePath: 'components/shared/dialog.tsx',
+    targetPath: 'components/shared/dialog.tsx',
+    dependencies: ['classmerge', 'button'],
+  },
 
   // Views
   today: {
