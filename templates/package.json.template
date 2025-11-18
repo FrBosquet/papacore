@@ -1,0 +1,35 @@
+{
+  "name": "{{PROJECT_NAME}}",
+  "version": "1.0.0",
+  "description": "Datacore components built with Papacore",
+  "main": "index.js",
+  "scripts": {
+    "dev": "papacore dev",
+    "build": "papacore build",
+    "copy": "papacore copy",
+    "build:css": "postcss src/styles.css -o dist/styles.css --minify",
+    "build:css:watch": "postcss src/styles.css -o dist/styles.css --watch",
+    "config": "papacore config",
+    "scan": "papacore scan",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
+    "format:check": "biome format ."
+  },
+  "keywords": ["obsidian", "datacore", "papacore"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@biomejs/biome": "^2.3.2",
+    "@tailwindcss/postcss": "^4.1.16",
+    "@types/node": "^24.9.2",
+    "papacore": "^0.1.0",
+    "postcss": "^8.5.6",
+    "postcss-cli": "^11.0.1",
+    "tailwindcss": "^4.1.16",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@blacksmithgu/datacore": "^0.1.24"
+  }
+}
