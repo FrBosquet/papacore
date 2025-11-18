@@ -31,7 +31,8 @@ program
 program
   .command('init [project-name]')
   .description('Create a new Papacore project')
-  .action(initCommand);
+  .option('--no-tooling', 'Skip installing biome and vscode settings')
+  .action((projectName, options) => initCommand(projectName, options));
 
 // Install command
 program

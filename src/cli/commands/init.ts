@@ -7,10 +7,14 @@ import { logger } from '../utils/logger.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export async function initCommand(projectName?: string): Promise<void> {
+export async function initCommand(
+  projectName?: string,
+  options?: { noTooling?: boolean }
+): Promise<void> {
   try {
     const name = projectName || 'papacore-project';
     const targetDir = path.join(process.cwd(), name);
+    const installTooling = !options?.noTooling;
 
     // Check if directory already exists
     if (fs.existsSync(targetDir)) {
@@ -58,7 +62,6 @@ export async function initCommand(projectName?: string): Promise<void> {
       'babel.config.js',
       'tailwind.config.js',
       'tsconfig.json',
-      'biome.json',
       'postcss.config.js',
     ];
 
@@ -71,11 +74,21 @@ export async function initCommand(projectName?: string): Promise<void> {
       }
     }
 
-    // Copy .vscode settings
-    const vscodeTemplateDir = path.join(templatesDir, 'vscode');
-    const targetVscodeDir = path.join(targetDir, '.vscode');
-    if (fs.existsSync(vscodeTemplateDir)) {
-      copyRecursive(vscodeTemplateDir, targetVscodeDir);
+    // Optionally install tooling (biome and vscode settings)
+    if (installTooling) {
+      // Copy biome.json
+      const biomeSrc = path.join(configTemplateDir, 'biome.json');
+      const biomeDest = path.join(targetDir, 'biome.json');
+      if (fs.existsSync(biomeSrc)) {
+        fs.copyFileSync(biomeSrc, biomeDest);
+      }
+
+      // Copy .vscode settings
+      const vscodeTemplateDir = path.join(templatesDir, 'vscode');
+      const targetVscodeDir = path.join(targetDir, '.vscode');
+      if (fs.existsSync(vscodeTemplateDir)) {
+        copyRecursive(vscodeTemplateDir, targetVscodeDir);
+      }
     }
 
     // Create package.json from template

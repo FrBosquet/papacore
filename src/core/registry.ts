@@ -8,11 +8,11 @@ export type InstallableItem = {
   name: string;
   /** Description of what this item does */
   description: string;
-  /** Category: component, util, or view */
-  category: 'component' | 'util' | 'view';
-  /** Relative path from templates/src/Datacore/ */
+  /** Category: component, util, view, or tooling */
+  category: 'component' | 'util' | 'view' | 'tooling';
+  /** Relative path from templates/ (for tooling) or templates/src/Datacore/ (for others) */
   sourcePath: string;
-  /** Target path in user project (relative to src/Datacore/) */
+  /** Target path in user project */
   targetPath: string;
   /** Dependencies (other items that must be installed first) */
   dependencies: string[];
@@ -78,6 +78,14 @@ export const REGISTRY: Record<string, InstallableItem> = {
     targetPath: 'components/shared/dialog.tsx',
     dependencies: ['classmerge', 'button'],
   },
+  link: {
+    name: 'link',
+    description: 'Link component for navigating to vault notes with icons and tooltips',
+    category: 'component',
+    sourcePath: 'components/shared/link.tsx',
+    targetPath: 'components/shared/link.tsx',
+    dependencies: ['classmerge', 'files'],
+  },
 
   // Views
   sample: {
@@ -86,6 +94,24 @@ export const REGISTRY: Record<string, InstallableItem> = {
     category: 'view',
     sourcePath: 'views/Sample.tsx',
     targetPath: 'views/Sample.tsx',
+    dependencies: [],
+  },
+
+  // Tooling
+  biome: {
+    name: 'biome',
+    description: 'Biome configuration for linting and formatting',
+    category: 'tooling',
+    sourcePath: 'config/biome.json',
+    targetPath: 'biome.json',
+    dependencies: [],
+  },
+  vscode: {
+    name: 'vscode',
+    description: 'VS Code settings for Tailwind IntelliSense',
+    category: 'tooling',
+    sourcePath: 'vscode/settings.json',
+    targetPath: '.vscode/settings.json',
     dependencies: [],
   },
 };

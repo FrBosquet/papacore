@@ -87,8 +87,15 @@ async function installItem(
   templateSrcDir: string,
   projectRoot: string
 ): Promise<void> {
-  const sourcePath = path.join(templateSrcDir, item.sourcePath);
-  const targetPath = path.join(projectRoot, 'src/Datacore', item.targetPath);
+  // Tooling items are in templates/ root, others in templates/src/Datacore/
+  const isTooling = item.category === 'tooling';
+  const templatesRoot = path.join(templateSrcDir, '..');
+  const sourcePath = isTooling
+    ? path.join(templatesRoot, item.sourcePath)
+    : path.join(templateSrcDir, item.sourcePath);
+  const targetPath = isTooling
+    ? path.join(projectRoot, item.targetPath)
+    : path.join(projectRoot, 'src/Datacore', item.targetPath);
 
   // Check if file already exists
   if (fs.existsSync(targetPath)) {
@@ -141,6 +148,7 @@ function listAvailableItems(): void {
     component: items.filter((i) => i.category === 'component'),
     util: items.filter((i) => i.category === 'util'),
     view: items.filter((i) => i.category === 'view'),
+    tooling: items.filter((i) => i.category === 'tooling'),
   };
 
   console.log('');
@@ -166,6 +174,14 @@ function listAvailableItems(): void {
   if (byCategory.view.length > 0) {
     logger.success('Views:');
     for (const item of byCategory.view) {
+      console.log(`  ${item.name.padEnd(20)} - ${item.description}`);
+    }
+    console.log('');
+  }
+
+  if (byCategory.tooling.length > 0) {
+    logger.success('Tooling:');
+    for (const item of byCategory.tooling) {
       console.log(`  ${item.name.padEnd(20)} - ${item.description}`);
     }
     console.log('');
