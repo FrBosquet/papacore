@@ -3,8 +3,8 @@ import { Command } from 'commander';
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { buildCommand } from './commands/build.js';
 import { buildCssCommand } from './commands/build-css.js';
+import { buildCommand } from './commands/build.js';
 import { configCommand } from './commands/config.js';
 import { copyCommand } from './commands/copy.js';
 import { devCommand } from './commands/dev.js';
@@ -12,6 +12,7 @@ import { initCommand } from './commands/init.js';
 import { installCommand } from './commands/install.js';
 import { scanCommand } from './commands/scan.js';
 import { setColorCommand } from './commands/theme.js';
+import { addViewCommand, copyViewCommand, listViewsCommand } from './commands/view.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -96,5 +97,28 @@ theme
   .command('set-color <color-name> <color-value>')
   .description('Set a theme color with auto-generated shades (50-950)')
   .action(setColorCommand);
+
+// View command with subcommands
+const view = program
+  .command('view')
+  .description('Manage views');
+
+view
+  .command('list')
+  .description('List all available views')
+  .action(listViewsCommand);
+
+view
+  .command('add <name>')
+  .description('Create a new view')
+  .action(addViewCommand);
+
+view
+  .command('copy')
+  .description('Copy a view snippet to clipboard')
+  .action(copyViewCommand);
+
+// Default action for 'view' (without subcommand) - list views
+view.action(listViewsCommand);
 
 program.parse(process.argv);

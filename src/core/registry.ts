@@ -80,7 +80,7 @@ export const REGISTRY: Record<string, InstallableItem> = {
   },
   link: {
     name: 'link',
-    description: 'Link component for navigating to vault notes with icons and tooltips',
+    description: 'Link component for navigating to vault notes tooltips',
     category: 'component',
     sourcePath: 'components/shared/link.tsx',
     targetPath: 'components/shared/link.tsx',

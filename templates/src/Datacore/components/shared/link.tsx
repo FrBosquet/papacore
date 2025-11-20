@@ -1,48 +1,41 @@
-import type { IconName } from 'papacore'
-import type { ComponentChildren } from 'preact'
-import { useEffect, useRef } from 'preact/hooks'
-import { classMerge } from '../../utils/classMerge'
-import { cleanPath } from '../../utils/files'
+import type { Link } from "@blacksmithgu/datacore";
+import type { ComponentChildren } from "preact";
+import { classMerge } from "../../utils/classMerge";
+import { classVariants } from "../../utils/classVariants";
 
-type Props = {
-  path: string
-  children: ComponentChildren
-  className?: string
-  wrapperClassName?: string
-  icon?: IconName
-  iconClassName?: string
-  tooltip?: string
-}
+const getVariant = classVariants({
+  base: '[&_a]:no-underline [&_a]:contents [&_a]:font-[weight:inherit] [&_a]:text-inherit',
+  variants: {
+    default: ''
+  },
+  sizes: {
+    default: ''
+  }
+})
 
-export const Link = ({ path, children, icon, className, iconClassName, tooltip, wrapperClassName }: Props) => {
-  const pRef = useRef<HTMLParagraphElement>(null)
-
-  // Create a link to the file
-  const link = dc.fileLink(cleanPath(path)).withDisplay(
-    (
-      <div className={`flex items-center gap-2 ${className}`}>
-        {icon && <dc.Icon icon={icon} className={iconClassName} />}
-        {children}
-      </div>
-    ) as unknown as string
-  ) // Allows to pass a React element as a string
-
-  useEffect(() => {
-    const aRef = pRef.current?.querySelector('a')
-
-    if (tooltip && aRef) {
-      aRef.setAttribute('aria-label', tooltip)
-    }
-  }, [])
-
-  return (
-    <span
-      ref={pRef}
-      className={classMerge("uppercase p-0 m-0 no-underline text-sm tracking-wide font-semibold text-theme-accent hover:text-theme-contrast transition-all overflow-hidden w-full", wrapperClassName)}
-    >
-      <dc.Link
-        link={link}
-      />
-    </span>
+export type Props = {
+  children?: ComponentChildren;
+  className?: string;
+  variant?: Parameters<typeof getVariant>[0]
+  size?: Parameters<typeof getVariant>[1]
+} & (
+    { path: string, link?: never } |
+    { path?: never, link: Link }
   )
+
+export const Link = ({
+  children,
+  className,
+  path,
+  link,
+  variant,
+  size
+}: Props) => {
+  const resolvedClassName = classMerge(getVariant(variant, size), className);
+  const resolvedLink = link ?? dc.fileLink(path);
+  const linkAndViz = resolvedLink.withDisplay(children as unknown as string);
+
+  return <div className={resolvedClassName}>
+    <dc.Link link={linkAndViz} />
+  </div>;
 }

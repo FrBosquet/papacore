@@ -18,7 +18,7 @@ const getVariant = classVariants({
     sm: 'px-1 text-xs',
     lg: 'px-3 text-base',
     icon: 'px-1 py-1 size-8 rounded-full text-xs aspect-square',
-    ['icon-xs']: 'px-[0.25rem] py-[0.25rem] [&_.dc-icon]:size-3 rounded-full text-xs aspect-square'
+    ['icon-xs']: 'px-1 py-1 [&_.dc-icon]:size-3 rounded-full text-xs aspect-square'
   },
 })
 
