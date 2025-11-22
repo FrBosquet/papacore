@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+#### [v0.1.6](https://github.com/FrBosquet/papacore/compare/v0.1.5...v0.1.6)
+
+- Add autoupdater [`9c062d3`](https://github.com/FrBosquet/papacore/commit/9c062d3b713b04429835757e6f4e8f90f6210904)
+
 #### [v0.1.5](https://github.com/FrBosquet/papacore/compare/v0.1.4...v0.1.5)
+
+> 22 November 2025
 
 - Fix: code snippet generation [`c19a33c`](https://github.com/FrBosquet/papacore/commit/c19a33cab216b957029aeba85e0c8da5ebb0ba14)
 
