@@ -20,6 +20,8 @@
     "copy:babel": "node scripts/copy-babel-plugins.cjs",
     "build": "pnpm run generate:icons && tsc && pnpm run copy:babel",
     "dev": "tsc --watch",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "prepublishOnly": "pnpm run build"
   },
   "keywords": [
@@ -58,9 +60,12 @@
     "@blacksmithgu/datacore": "^0.1.2",
     "@types/babel__core": "^7.20.5",
     "@types/culori": "^4.0.1",
+    "@types/jest": "^29.5.14",
     "@types/node": "^24.9.2",
+    "jest": "^29.7.0",
     "lucide-static": "^0.552.0",
     "preact": "^10.0.0",
+    "ts-jest": "^29.2.5",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
