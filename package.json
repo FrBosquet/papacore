@@ -1,6 +1,6 @@
 {
   "name": "papacore",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A framework to assist in the development of components for the Datacore platform in Obsidian",
   "main": "dist/index.js",
   "type": "module",

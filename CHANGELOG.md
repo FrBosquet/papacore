@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+#### [v0.1.5](https://github.com/FrBosquet/papacore/compare/v0.1.4...v0.1.5)
+
+- Fix: code snippet generation [`c19a33c`](https://github.com/FrBosquet/papacore/commit/c19a33cab216b957029aeba85e0c8da5ebb0ba14)
+
 #### [v0.1.4](https://github.com/FrBosquet/papacore/compare/v0.1.3...v0.1.4)
+
+> 22 November 2025
 
 - Set up changelog generation [`0d83442`](https://github.com/FrBosquet/papacore/commit/0d83442d0f6ee8d0ab46c6fb80bfe8c39e501694)
 - Add release command [`ab33e7d`](https://github.com/FrBosquet/papacore/commit/ab33e7dbb07b737f96b929e25511500a349107a1)
