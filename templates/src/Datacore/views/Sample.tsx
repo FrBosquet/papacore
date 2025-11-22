@@ -33,8 +33,10 @@ export const Sample = () => {
         <h2 className="text-xl font-semibold mb-2">Getting Started</h2>
         <ul className="list-disc list-inside space-y-1 text-primary-300">
           <li>Use <code className="bg-primary-900 px-1 rounded">dc.useQuery()</code> to fetch pages from your vault</li>
+          <li>Install papacore cli to easily access helpers <code className="bg-primary-900 px-1 rounded">npm install -g papacore</code></li>
           <li>Install components with <code className="bg-primary-900 px-1 rounded">papacore install button</code></li>
           <li>Use Tailwind CSS classes for styling</li>
+          <li>Use papacore to customise your theme <code className="bg-primary-900 px-1 rounded">papacore theme set-color primary 335566</code></li>
           <li>Check out the stories files for component examples</li>
         </ul>
       </section>
@@ -43,7 +45,7 @@ export const Sample = () => {
         <h2 className="text-xl font-semibold mb-2">Example Query</h2>
         <pre className="bg-primary-900 p-2 rounded overflow-x-auto">
           <code className="text-sm text-green-400">
-{`const pages = dc.useQuery("#project")
+            {`const pages = dc.useQuery("#project")
 return pages.map(page => (
   <div key={page.$path}>
     {page.$name}

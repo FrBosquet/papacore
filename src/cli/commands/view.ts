@@ -26,7 +26,7 @@ function getViews(): string[] {
  */
 function generateSnippet(viewName: string): string {
   return `\`\`\`datacorejsx
-const { ${viewName} } = await dc.require("views/${viewName}.jsx");
+const { ${viewName} } = await dc.require("Datacore/views/${viewName}.jsx");
 
 return <${viewName} />;
 \`\`\``;
