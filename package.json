@@ -24,7 +24,8 @@
     "test:watch": "jest --watch",
     "changelog": "auto-changelog -p",
     "version": "pnpm run changelog && git add CHANGELOG.md",
-    "prepublishOnly": "pnpm run build"
+    "prepublishOnly": "pnpm run build",
+    "release": "node scripts/release.cjs"
   },
   "keywords": [
     "obsidian",
