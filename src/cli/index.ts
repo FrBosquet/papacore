@@ -12,6 +12,7 @@ import { initCommand } from './commands/init.js';
 import { installCommand } from './commands/install.js';
 import { scanCommand } from './commands/scan.js';
 import { setColorCommand } from './commands/theme.js';
+import { updateCliCommand } from './commands/update-cli.js';
 import { addViewCommand, copyViewCommand, listViewsCommand } from './commands/view.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -87,6 +88,12 @@ program
   .command('build-css')
   .description('Build CSS only')
   .action(buildCssCommand);
+
+// Update CLI command
+program
+  .command('update-cli')
+  .description('Update the globally installed papacore CLI')
+  .action(updateCliCommand);
 
 // Theme command with subcommands
 const theme = program
