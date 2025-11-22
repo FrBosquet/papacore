@@ -2,7 +2,10 @@
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
-#### [v0.1.3](https://github.com/FrBosquet/papacore/compare/v0.1.3...v0.1.3)
+#### [v0.1.4](https://github.com/FrBosquet/papacore/compare/v0.1.3...v0.1.4)
+
+- Set up changelog generation [`0d83442`](https://github.com/FrBosquet/papacore/commit/0d83442d0f6ee8d0ab46c6fb80bfe8c39e501694)
+- Add release command [`ab33e7d`](https://github.com/FrBosquet/papacore/commit/ab33e7dbb07b737f96b929e25511500a349107a1)
 
 #### [v0.1.3](https://github.com/FrBosquet/papacore/compare/v0.1.2...v0.1.3)
 
