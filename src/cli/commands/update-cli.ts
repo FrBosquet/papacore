@@ -1,5 +1,11 @@
 import { execSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { logger } from '../utils/logger.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 /**
  * Detect which package manager is managing the global papacore installation
@@ -55,10 +61,40 @@ function getInstallCommand(packageManager: string): string {
 }
 
 /**
+ * Get current version from package.json
+ */
+function getCurrentVersion(): string {
+  try {
+    const packageJson = JSON.parse(
+      readFileSync(join(__dirname, '../../../package.json'), 'utf-8')
+    );
+    return packageJson.version;
+  } catch (err) {
+    return 'unknown';
+  }
+}
+
+/**
+ * Get installed version after update
+ */
+function getInstalledVersion(): string {
+  try {
+    const version = execSync('papacore --version', { encoding: 'utf-8' }).trim();
+    return version;
+  } catch (err) {
+    return 'unknown';
+  }
+}
+
+/**
  * Update the globally installed papacore CLI
  */
 export async function updateCliCommand(): Promise<void> {
   try {
+    // Get current version before updating
+    const currentVersion = getCurrentVersion();
+    logger.info(`Current version: ${currentVersion}`);
+
     logger.info('Detecting package manager...');
 
     const packageManager = detectPackageManager();
@@ -81,8 +117,11 @@ export async function updateCliCommand(): Promise<void> {
     // Run the update command
     execSync(command, { stdio: 'inherit' });
 
+    // Get new version after update
+    const newVersion = getInstalledVersion();
+
     console.log('');
-    logger.success('Papacore CLI updated successfully!');
+    logger.success(`Updated from v${currentVersion} to v${newVersion}!`);
   } catch (err) {
     logger.error(
       `Failed to update CLI: ${err instanceof Error ? err.message : String(err)}`
