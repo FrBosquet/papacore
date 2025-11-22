@@ -38,6 +38,10 @@ export const classMerge = (...classNames: Array<string | undefined>): string => 
     const arbitraryMatch = className.match(/^([a-z-]+)\[/)
     if (arbitraryMatch) return arbitraryMatch[1]
 
+
+    // Special cases
+    if (className === 'border') return 'core-border'
+
     const parts = className.split('-')
     if (parts.length === 0) return className
 
