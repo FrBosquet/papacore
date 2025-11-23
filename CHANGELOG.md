@@ -2,7 +2,16 @@
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+#### [v0.1.7](https://github.com/FrBosquet/papacore/compare/v0.1.6...v0.1.7)
+
+- Add Docusaurus documentation site [`dbd51e9`](https://github.com/FrBosquet/papacore/commit/dbd51e9c21d31527f2fbb8f36cdd809fa3c70a66)
+- Add GitHub Actions workflow for automatic docs deployment [`afb4a14`](https://github.com/FrBosquet/papacore/commit/afb4a1424eb5037c391f14a0951740bd5dffe73f)
+- Improve update-cli command [`45ef9b2`](https://github.com/FrBosquet/papacore/commit/45ef9b22116f8fcfb00825e15fd63bda06146dea)
+- Add missing preact dependency to project template [`c6e760f`](https://github.com/FrBosquet/papacore/commit/c6e760f9eb48ef1a643bb4d78ce23c52bdfb6da6)
+
 #### [v0.1.6](https://github.com/FrBosquet/papacore/compare/v0.1.5...v0.1.6)
+
+> 22 November 2025
 
 - Add autoupdater [`9c062d3`](https://github.com/FrBosquet/papacore/commit/9c062d3b713b04429835757e6f4e8f90f6210904)
 
