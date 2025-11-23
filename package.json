@@ -25,7 +25,11 @@
     "changelog": "auto-changelog -p",
     "version": "pnpm run changelog && git add CHANGELOG.md",
     "prepublishOnly": "pnpm run build",
-    "release": "node scripts/release.cjs"
+    "release": "node scripts/release.cjs",
+    "docs:dev": "cd website && pnpm start",
+    "docs:build": "cd website && pnpm build",
+    "docs:serve": "cd website && pnpm serve",
+    "docs:deploy": "cd website && pnpm deploy"
   },
   "keywords": [
     "obsidian",
