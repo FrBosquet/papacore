@@ -32,7 +32,17 @@ export class CSSBuilder {
     }
 
     try {
-      execSync('pnpm run build:css', { stdio: 'inherit', cwd: this.projectRoot });
+      // Build Tailwind CSS directly using PostCSS, without relying on a project script.
+      // This assumes a standard Papacore project layout with src/styles.css.
+      const inputPath = 'src/styles.css';
+      const outputPath = path.join(this.distDir, 'styles.css');
+
+      ensureDir(this.distDir);
+
+      execSync(`pnpm exec postcss ${inputPath} -o ${outputPath} --minify`, {
+        stdio: 'inherit',
+        cwd: this.projectRoot,
+      });
 
       if (this.verbose) {
         console.log('CSS built successfully!');
