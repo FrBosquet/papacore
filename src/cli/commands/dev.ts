@@ -1,9 +1,8 @@
-import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { Builder } from '../../core/build/builder.js';
 import { Watcher } from '../../core/build/watcher.js';
-import { Scanner } from '../../core/deps/scanner.js';
 import { getProjectPaths, loadConfig, askConfirmation } from '../../core/utils.js';
+import { isObsidianCliAvailable, reloadDatacorePlugin } from '../../core/obsidian/cli.js';
 import { logger } from '../utils/logger.js';
 
 export async function devCommand(): Promise<void> {
@@ -18,22 +17,32 @@ export async function devCommand(): Promise<void> {
     // Check if we're in a papacore project
     const babelConfigPath = path.join(cwd, 'babel.config.js');
 
+    // Ensure Obsidian CLI is available before starting dev mode
+    if (!isObsidianCliAvailable()) {
+      logger.error("Obsidian CLI ('obsidian') not found on PATH.");
+      logger.error('Dev mode requires the Obsidian CLI to reload the Datacore plugin.');
+      process.exit(1);
+    }
+
     // Ask for confirmation before starting
-    logger.warn('Development mode will automatically copy files to your vault');
-    const confirmed = await askConfirmation(targetVault, paths.distDir);
+    logger.warn('Development mode will rebuild your project, copy dist files to your vault, and reload the Datacore plugin via the Obsidian CLI.');
+    const confirmed = await askConfirmation(
+      targetVault,
+      paths.distDir,
+      [
+        `Files will be automatically copied from ${paths.distDir} to ${targetVault}.`,
+        'Existing vault files with the same paths will be overwritten, but markdown files that require Datacore views will NOT be modified.',
+        'Papacore will also call obsidian plugin reload id=datacore on changes.',
+      ].join('\n')
+    );
 
     if (!confirmed) {
       logger.info('Dev mode cancelled');
       process.exit(0);
     }
 
-    // Create target vault directory if it doesn't exist
-    if (!fs.existsSync(targetVault)) {
-      logger.info(`Creating target directory: ${targetVault}`);
-      fs.mkdirSync(targetVault, { recursive: true });
-    }
-
-    // Create builder with vault target
+    // Create builder in dev mode – copies dist files to the vault,
+    // but will not modify existing markdown files or use deps.json.
     const builder = new Builder({
       projectRoot: paths.projectRoot,
       srcDir: paths.srcDir,
@@ -41,25 +50,17 @@ export async function devCommand(): Promise<void> {
       babelConfigPath,
       targetVault,
       verbose: true,
+      devMode: true,
     });
 
-    // Create scanner for dependency updates
-    const scanner = new Scanner({
-      srcDir: paths.srcDir,
-      distDir: paths.distDir,
-      verbose: false,
-    });
-
-    // Create watcher with update callback
+    // Create watcher with reload callback
     const watcher = new Watcher({
       builder,
       srcDir: paths.srcDir,
-      onUpdate: () => {
-        // Update deps.json after each build
-        const deps = scanner.updateDepsJson(targetVault);
-        if (deps) {
-          const depsPath = path.join(cwd, 'deps.json');
-          fs.writeFileSync(depsPath, JSON.stringify(deps, null, 2));
+      onAfterCompile: () => {
+        const ok = reloadDatacorePlugin();
+        if (!ok) {
+          logger.warn('Failed to reload Datacore plugin via Obsidian CLI.');
         }
       },
     });

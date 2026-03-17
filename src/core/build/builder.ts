@@ -14,15 +14,22 @@ export interface BuilderOptions {
   babelConfigPath: string;
   targetVault?: string;
   verbose?: boolean;
+  /**
+   * When true, the builder runs in development mode and will not
+   * modify existing markdown files or perform dependency-based reloads.
+   */
+  devMode?: boolean;
 }
 
 export class Builder {
   private projectRoot: string;
   private srcDir: string;
   private distDir: string;
-  private babelConfig: any;
+  // Babel config shape is not strictly typed; use unknown to avoid any.
+  private babelConfig: unknown;
   private targetVault?: string;
   private verbose: boolean;
+   private devMode: boolean;
 
   constructor(options: BuilderOptions) {
     this.projectRoot = options.projectRoot;
@@ -30,6 +37,7 @@ export class Builder {
     this.distDir = options.distDir;
     this.targetVault = options.targetVault;
     this.verbose = options.verbose ?? true;
+    this.devMode = options.devMode ?? false;
 
     // Load babel config
     this.babelConfig = require(options.babelConfigPath);
@@ -107,60 +115,10 @@ export class Builder {
   /**
    * Touch dependent vault files to trigger Obsidian reload
    */
-  touchDependentFiles(outPath: string): void {
-    if (!this.targetVault) return;
-
-    const relativePath = path.relative(this.distDir, outPath);
-
-    // Load deps.json if it exists
-    const depsPath = path.join(this.projectRoot, 'deps.json');
-    if (!fs.existsSync(depsPath)) return;
-
-    try {
-      const deps = JSON.parse(fs.readFileSync(depsPath, 'utf-8'));
-
-      // Recursively find all views affected by this file change
-      const affectedViews = this.findAffectedViews(relativePath, deps.graph || {});
-
-      // Collect all vault files that use these affected views
-      const vaultFilesToTouch = new Set<string>();
-      for (const viewPath of affectedViews) {
-        const vaultFiles = deps.views?.[viewPath] || [];
-        for (const file of vaultFiles) {
-          vaultFilesToTouch.add(file);
-        }
-      }
-
-      if (vaultFilesToTouch.size > 0) {
-        console.log(`Triggering reload for ${vaultFilesToTouch.size} dependent file(s)...`);
-        if (affectedViews.size > 0) {
-          console.log(`  Affected views: ${Array.from(affectedViews).join(', ')}`);
-        }
-
-        vaultFilesToTouch.forEach((file) => {
-          const fullPath = path.join(this.targetVault!, file);
-          if (fs.existsSync(fullPath)) {
-            const content = fs.readFileSync(fullPath, 'utf-8');
-
-            // Find and update timestamp comment in datacorejsx blocks
-            const timestamp = Date.now();
-            const timestampComment = `// Papacore build ${timestamp}`;
-
-            // Match datacorejsx blocks and add/update timestamp at the top
-            const updatedContent = content.replace(
-              /(```datacorejsx\n)(\/\/ Papacore build [^\n]+\n)?([\s\S]*?\n```)/g,
-              `$1${timestampComment}\n$3`
-            );
-
-            // Write the updated content
-            fs.writeFileSync(fullPath, updatedContent);
-            console.log(`  Reloaded: ${file}`);
-          }
-        });
-      }
-    } catch (error) {
-      console.error('Error touching dependent files:', (error as Error).message);
-    }
+  touchDependentFiles(_outPath: string): void {
+    // Deprecated: Obsidian reload is now handled via the Obsidian CLI.
+    // We intentionally no longer mutate markdown files or update timestamps.
+    return;
   }
 
   /**
@@ -224,10 +182,12 @@ export class Builder {
 
     try {
       // Transform the file
-      const result = transformFileSync(filePath, {
-        ...this.babelConfig,
-        filename: filePath,
-      });
+      const result = transformFileSync(
+        filePath,
+        Object.assign({}, this.babelConfig as Record<string, unknown>, {
+          filename: filePath,
+        })
+      );
 
       if (!result || !result.code) {
         throw new Error('Babel transformation returned no code');
@@ -252,11 +212,9 @@ export class Builder {
         const importPath = path.relative(this.distDir, outPath).replace(/\\/g, '/');
 
         // Generate the markdown content with datacorejsx code block
-        const timestamp = Date.now();
         const mdContent = `
 
 \`\`\`datacorejsx
-// Papacore build ${timestamp}
 const { ${exportName} } = await dc.require('${importPath}');
 
 return <${exportName} />
@@ -274,7 +232,8 @@ return <${exportName} />
         }
       }
 
-      // Copy to vault if target vault is set
+      // Copy to vault if target vault is set; in dev mode we still copy,
+      // but we do not touch dependent markdown files.
       if (this.targetVault) {
         this.copyToVault(outPath);
 
@@ -307,7 +266,9 @@ return <${exportName} />
       console.log('Building...');
     }
 
-    files.forEach((file) => this.compileFile(file));
+    for (const file of files) {
+      this.compileFile(file);
+    }
 
     // Build CSS
     this.buildCSS();

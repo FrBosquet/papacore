@@ -1,24 +1,28 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import { Builder } from './builder.js';
+import type { Builder } from './builder.js';
 
 export interface WatcherOptions {
   builder: Builder;
   srcDir: string;
-  onUpdate?: () => void;
+  /**
+   * Optional callback executed after a successful compile cycle.
+   * Used by dev mode to trigger external reloads (e.g. Obsidian CLI).
+   */
+  onAfterCompile?: () => void;
 }
 
 export class Watcher {
   private builder: Builder;
   private srcDir: string;
   private compiledFiles: Set<string>;
-  private onUpdate?: () => void;
+  private onAfterCompile?: () => void;
 
   constructor(options: WatcherOptions) {
     this.builder = options.builder;
     this.srcDir = options.srcDir;
     this.compiledFiles = new Set();
-    this.onUpdate = options.onUpdate;
+    this.onAfterCompile = options.onAfterCompile;
   }
 
   /**
@@ -30,6 +34,10 @@ export class Watcher {
 
     // Keep track of previously compiled files
     this.compiledFiles = new Set(this.builder.getAllFiles(this.srcDir));
+
+    if (this.onAfterCompile) {
+      this.onAfterCompile();
+    }
 
     console.log(`\nWatching for changes in ${this.srcDir}...`);
 
@@ -65,9 +73,9 @@ export class Watcher {
         // Rebuild CSS since Tailwind classes might have changed
         this.builder.buildCSS();
 
-        // Call optional update callback
-        if (this.onUpdate) {
-          this.onUpdate();
+        // Call optional callback after a successful compile cycle
+        if (this.onAfterCompile) {
+          this.onAfterCompile();
         }
       }
 
