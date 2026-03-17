@@ -2,7 +2,17 @@
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+#### [v0.2.0](https://github.com/FrBosquet/papacore/compare/v0.1.7...v0.2.0)
+
+- Clean scan commands [`266bf8f`](https://github.com/FrBosquet/papacore/commit/266bf8f8169ec91930c3e9cc575541740515fef6)
+- Use obsidian CLI [`32d94d3`](https://github.com/FrBosquet/papacore/commit/32d94d363ed579516d0950cc6a8cc89d9dd0f9d1)
+- Add cursor agent docs [`0d9e794`](https://github.com/FrBosquet/papacore/commit/0d9e7945e4a20657ac11d595e4768f1f80b2aa69)
+- Fix: tailwind build [`96ded85`](https://github.com/FrBosquet/papacore/commit/96ded85caa77b87af4a7570519f06f0b294b9964)
+- Use Obsidian CLI to trigger rerenders [`a441ca9`](https://github.com/FrBosquet/papacore/commit/a441ca97a36ab996b5a92fad8d020b843b2cc032)
+
 #### [v0.1.7](https://github.com/FrBosquet/papacore/compare/v0.1.6...v0.1.7)
+
+> 23 November 2025
 
 - Add Docusaurus documentation site [`dbd51e9`](https://github.com/FrBosquet/papacore/commit/dbd51e9c21d31527f2fbb8f36cdd809fa3c70a66)
 - Add GitHub Actions workflow for automatic docs deployment [`afb4a14`](https://github.com/FrBosquet/papacore/commit/afb4a1424eb5037c391f14a0951740bd5dffe73f)
