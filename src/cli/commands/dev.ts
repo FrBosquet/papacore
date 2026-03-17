@@ -1,8 +1,8 @@
 import * as path from 'node:path';
 import { Builder } from '../../core/build/builder.js';
 import { Watcher } from '../../core/build/watcher.js';
-import { getProjectPaths, loadConfig, askConfirmation } from '../../core/utils.js';
 import { isObsidianCliAvailable, reloadDatacorePlugin } from '../../core/obsidian/cli.js';
+import { askConfirmation, getProjectPaths, loadConfig } from '../../core/utils.js';
 import { logger } from '../utils/logger.js';
 
 export async function devCommand(): Promise<void> {
@@ -32,7 +32,7 @@ export async function devCommand(): Promise<void> {
       [
         `Files will be automatically copied from ${paths.distDir} to ${targetVault}.`,
         'Existing vault files with the same paths will be overwritten, but markdown files that require Datacore views will NOT be modified.',
-        'Papacore will also call obsidian plugin reload id=datacore on changes.',
+        'Papacore will also call onsidian plugin:reload id=datacore on changes.',
       ].join('\n')
     );
 

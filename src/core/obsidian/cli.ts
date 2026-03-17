@@ -22,7 +22,7 @@ export function isObsidianCliAvailable(): boolean {
  * Returns true if the command was executed successfully.
  */
 export function reloadDatacorePlugin(): boolean {
-  const result = spawnSync('obsidian', ["plugin", "reload", "id=datacore"], {
+  const result = spawnSync('obsidian', ['plugin:reload', 'id=datacore'], {
     stdio: 'inherit',
   });
 
