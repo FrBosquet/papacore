@@ -31,7 +31,6 @@ papacore init [project-name]   # Initialize a new project
 papacore dev                    # Build + watch + install to vault
 papacore build                  # Build once
 papacore config                 # Configure vault path
-papacore scan                   # Scan vault for dependencies
 papacore generate-icons         # Generate icon definitions
 papacore build-css              # Build CSS only
 ```

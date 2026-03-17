@@ -156,9 +156,11 @@ export class Builder {
   }
 
   /**
-   * Compile a single file
+   * Compile a single file.
+   *
+   * Returns true on success, false on failure.
    */
-  compileFile(filePath: string): void {
+  compileFile(filePath: string): boolean {
     const relativePath = path.relative(this.srcDir, filePath);
     const ext = path.extname(filePath);
 
@@ -172,7 +174,7 @@ export class Builder {
     } else if (ext === '.ts') {
       outExt = '.js';
     } else {
-      return; // Skip other files
+      return true; // Skip other files
     }
 
     const outPath = path.join(this.distDir, relativePath.replace(/\.(ts|tsx)$/, outExt));
@@ -244,8 +246,10 @@ return <${exportName} />
         // Touch dependent vault files to trigger Obsidian reload
         this.touchDependentFiles(outPath);
       }
+      return true;
     } catch (error) {
       console.error(`Error compiling ${relativePath}:`, (error as Error).message);
+      return false;
     }
   }
 
@@ -262,19 +266,33 @@ return <${exportName} />
     // Get all source files
     const files = this.getAllFiles(this.srcDir);
 
-    if (this.verbose) {
-      console.log('Building...');
-    }
+    console.log(`Building ${files.length} file(s)...\n`);
 
-    for (const file of files) {
-      this.compileFile(file);
+    // Suppress per-file verbose logs during the initial batch build to keep
+    // output focused on the checklist UI.
+    const previousVerbose = this.verbose;
+    this.verbose = false;
+
+    try {
+      for (const file of files) {
+        const relPath = path.relative(this.srcDir, file);
+
+        // Show pending state
+        process.stdout.write(`[ ] ${relPath}\r`);
+
+        const ok = this.compileFile(file);
+
+        // Overwrite line with final status
+        const mark = ok ? 'x' : '!';
+        process.stdout.write(`\r[${mark}] ${relPath}\n`);
+      }
+    } finally {
+      this.verbose = previousVerbose;
     }
 
     // Build CSS
     this.buildCSS();
 
-    if (this.verbose) {
-      console.log('\nBuild completed successfully!');
-    }
+    console.log('\nBuild completed successfully!');
   }
 }

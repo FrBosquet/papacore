@@ -10,7 +10,6 @@ import { copyCommand } from './commands/copy.js';
 import { devCommand } from './commands/dev.js';
 import { initCommand } from './commands/init.js';
 import { installCommand } from './commands/install.js';
-import { scanCommand } from './commands/scan.js';
 import { setColorCommand } from './commands/theme.js';
 import { updateCliCommand } from './commands/update-cli.js';
 import { addViewCommand, copyViewCommand, listViewsCommand } from './commands/view.js';
@@ -67,12 +66,6 @@ program
   .command('config')
   .description('Configure vault path and other settings')
   .action(configCommand);
-
-// Scan command
-program
-  .command('scan')
-  .description('Scan vault for dependencies')
-  .action(scanCommand);
 
 // Generate icons - not yet implemented
 program
