@@ -2,7 +2,11 @@
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+#### [v0.2.1](https://github.com/FrBosquet/papacore/compare/v0.2.0...v0.2.1)
+
 #### [v0.2.0](https://github.com/FrBosquet/papacore/compare/v0.1.7...v0.2.0)
+
+> 17 March 2026
 
 - Clean scan commands [`266bf8f`](https://github.com/FrBosquet/papacore/commit/266bf8f8169ec91930c3e9cc575541740515fef6)
 - Use obsidian CLI [`32d94d3`](https://github.com/FrBosquet/papacore/commit/32d94d363ed579516d0950cc6a8cc89d9dd0f9d1)
