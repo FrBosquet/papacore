@@ -4,7 +4,7 @@ import { spawnSync } from 'node:child_process';
  * Check if the Obsidian CLI binary is available on PATH.
  */
 export function isObsidianCliAvailable(): boolean {
-  const result = spawnSync('obsidian', ['--version'], {
+  const result = spawnSync('obsidian', ['version'], {
     stdio: 'ignore',
   });
 
