@@ -2,7 +2,14 @@
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+#### [v0.2.2](https://github.com/FrBosquet/papacore/compare/v0.2.1...v0.2.2)
+
+- Update readme [`0223fa1`](https://github.com/FrBosquet/papacore/commit/0223fa1390b5d13386607f4468cf41694585ba63)
+- Fix: obsidian CLI dev init [`bbd1e00`](https://github.com/FrBosquet/papacore/commit/bbd1e00bb8cc0f0ba10ad6f6f0248df44eba33d9)
+
 #### [v0.2.1](https://github.com/FrBosquet/papacore/compare/v0.2.0...v0.2.1)
+
+> 17 March 2026
 
 #### [v0.2.0](https://github.com/FrBosquet/papacore/compare/v0.1.7...v0.2.0)
 
