@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+#### [v0.2.3](https://github.com/FrBosquet/papacore/compare/v0.2.2...v0.2.3)
+
+- Fix: detect Obsidian CLI without launching the app before dev prompt [`6fee473`](https://github.com/FrBosquet/papacore/commit/6fee4731eba1a325913824067e6d7e6602e4142f)
+
 #### [v0.2.2](https://github.com/FrBosquet/papacore/compare/v0.2.1...v0.2.2)
+
+> 4 June 2026
 
 - Update readme [`0223fa1`](https://github.com/FrBosquet/papacore/commit/0223fa1390b5d13386607f4468cf41694585ba63)
 - Fix: obsidian CLI dev init [`bbd1e00`](https://github.com/FrBosquet/papacore/commit/bbd1e00bb8cc0f0ba10ad6f6f0248df44eba33d9)
