@@ -57,6 +57,17 @@ pnpm run build
 node bin/papacore.js --help
 ```
 
+### Publishing a new version
+
+- Make your changes
+- Commit
+- Run `pnpm release <patch|minor|major>`
+- The script will:
+  - Update the changelog
+  - Bump the version
+  - Publish to npm
+  - Push the changes to the remote repository
+
 ## License
 
 MIT
